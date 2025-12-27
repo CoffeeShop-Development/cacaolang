@@ -1,0 +1,70 @@
+{
+    "name": "choco-lang",
+    "displayName": "Choco",
+    "description": "Syntax highlighting and language support for Choco programming language (.choco) - A blend of Go, Rust, and Ruby syntax.",
+    "version": "1.0.0",
+    "publisher": "CoffeeShop Development",
+    "author": {
+        "name": "Camila 'Mocha' Rose"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/choco-lang"
+    },
+    "bugs": {
+        "url": "https://github.com/yourusername/choco-lang/issues"
+    },
+    "homepage": "https://github.com/yourusername/choco-lang#readme",
+    "engines": {
+        "vscode": "^1.50.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets",
+        "Formatters"
+    ],
+    "keywords": [
+        "choco",
+        "chocolang",
+        "choco language",
+        "syntax highlighting",
+        "language support",
+        "go",
+        "rust",
+        "ruby"
+    ],
+    "icon": "icon.png",
+    "contributes": {
+        "languages": [
+            {
+                "id": "choco",
+                "aliases": ["Choco", "choco", "ChocoLang"],
+                "extensions": [".choco"],
+                "configuration": "./language-configuration.json",
+                "icon": {
+                    "light": "./icons/choco-light.svg",
+                    "dark": "./icons/choco-dark.svg"
+                }
+            }
+        ],
+        "grammars": [
+            {
+                "language": "choco",
+                "scopeName": "source.choco",
+                "path": "./syntaxes/choco.tmLanguage.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "echo 'No compilation needed for TextMate grammar'",
+        "watch": "echo 'No watch needed'",
+        "package": "vsce package",
+        "publish": "vsce publish"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.50.0",
+        "@vscode/vsce": "^2.22.0"
+    }
+}

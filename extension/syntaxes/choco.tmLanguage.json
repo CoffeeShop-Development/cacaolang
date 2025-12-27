@@ -1,0 +1,158 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "source.choco",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#keywords" },
+    { "include": "#constants" },
+    { "include": "#numbers" },
+    { "include": "#operators" },
+    { "include": "#builtins" },
+    { "include": "#functions" },
+    { "include": "#variables" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.choco",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.choco",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.choco",
+              "match": "\\\\(n|t|\\\\|\"|')"
+            }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.conditional.choco",
+          "match": "\\b(if|else)\\b"
+        },
+        {
+          "name": "keyword.control.loop.choco",
+          "match": "\\b(while|for)\\b"
+        },
+        {
+          "name": "keyword.control.flow.choco",
+          "match": "\\b(return|break|continue)\\b"
+        },
+        {
+          "name": "keyword.other.declaration.choco",
+          "match": "\\b(let|fn|struct|impl|trait|use|pub|mut)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.choco",
+          "match": "\\b(and|or|not)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.choco",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "constant.language.null.choco",
+          "match": "\\b(nil|null)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.choco",
+          "match": "\\b[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.choco",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.choco",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.arithmetic.choco",
+          "match": "(\\+|-|\\*|/|%)"
+        },
+        {
+          "name": "keyword.operator.assignment.compound.choco",
+          "match": "(\\+=|-=|\\*=|/=)"
+        },
+        {
+          "name": "keyword.operator.assignment.choco",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.arrow.choco",
+          "match": "->"
+        }
+      ]
+    },
+    "builtins": {
+      "patterns": [
+        {
+          "name": "support.function.builtin.io.choco",
+          "match": "\\b(puts|print|input)\\b"
+        },
+        {
+          "name": "support.function.builtin.conversion.choco",
+          "match": "\\b(str|int|float|bool|type)\\b"
+        },
+        {
+          "name": "support.function.builtin.collection.choco",
+          "match": "\\b(len|push|pop|append|insert|remove|clear)\\b"
+        },
+        {
+          "name": "support.function.builtin.math.choco",
+          "match": "\\b(abs|sqrt|pow|sin|cos|tan|floor|ceil|round|min|max)\\b"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.declaration.choco",
+          "match": "(?<=fn\\s+)([A-Za-z_][A-Za-z0-9_]*)"
+        },
+        {
+          "name": "entity.name.function.call.choco",
+          "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.declaration.choco",
+          "match": "(?<=let\\s+)([A-Za-z_][A-Za-z0-9_]*)"
+        },
+        {
+          "name": "variable.other.choco",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b"
+        }
+      ]
+    }
+  },
+  "fileTypes": ["choco"],
+  "name": "Choco"
+}
