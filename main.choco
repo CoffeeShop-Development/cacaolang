@@ -1,0 +1,42 @@
+puts "<=== SHOWCASE: ChocoLang 1.0.0 ===>";
+
+// ============================================
+
+fn greet(name) {
+    return "Hello, #{name}!";
+}
+
+let greeting = greet("ChocoLang User");
+puts greeting;
+
+// ============================================
+
+puts "ChocoLang is a language, not made to be easy, but to be comfortable.";
+puts "It aims to provide a balance between simplicity and functionality.";
+puts "It is designed for developers who want more control over their code without sacrificing readability.";
+puts "It supports functions, arrays, loops, and more advanced features.";
+
+// ============================================
+
+puts "<=== ROADMAP ===>";
+
+puts "<=== Version 2.0.0";
+puts "6. Structs/custom types";
+puts "7. Module system (import/export)";
+puts "8. File I/O";
+puts "9. Error handling (try/catch)";
+puts "10. Standard library basics";
+puts "";
+puts "<=== Version 3.0.0";
+puts "11. Type system with inference";
+puts "12. Closures and lambdas";
+puts "13. Async/await";
+puts "14. Pattern matching";
+puts "15. Generics";
+puts "";
+puts "<=== Version 4.0.0";
+puts "16. Package manager";
+puts "17. LSP for IDE support";
+puts "18. Testing framework";
+puts "19. Documentation generator";
+puts "20. REPL";

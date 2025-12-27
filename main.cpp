@@ -1,6 +1,8 @@
-// Choco Programming Language Interpreter
-// Combines Go, Rust, and Ruby-like syntax
-// File extension: .choco
+//////////////////////////////////////
+ // ChocoLang 1.0.0 - Sweet Wonderland
+ // CoffeeShop Development
+ // Made by Camila "Mocha" Rose
+ //////////////////////////////////////
 
 #include <iostream>
 #include <string>
@@ -12,12 +14,16 @@
 #include <cctype>
 #include <cmath>
 #include <stdexcept>
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
 // Token types
 enum TokenType {
     TOKEN_EOF, TOKEN_NUMBER, TOKEN_STRING, TOKEN_IDENTIFIER,
     TOKEN_LET, TOKEN_FN, TOKEN_IF, TOKEN_ELSE, TOKEN_WHILE, TOKEN_FOR, TOKEN_IN,
-    TOKEN_RETURN, TOKEN_PUTS, TOKEN_TRUE, TOKEN_FALSE,
+    TOKEN_RETURN, TOKEN_PUTS, TOKEN_TRUE, TOKEN_FALSE, TOKEN_STRUCT, TOKEN_IMPL,
+    TOKEN_IMPORT, TOKEN_FROM, TOKEN_TRY, TOKEN_CATCH, TOKEN_THROW, TOKEN_BREAK, TOKEN_CONTINUE,
     TOKEN_PLUS, TOKEN_MINUS, TOKEN_STAR, TOKEN_SLASH, TOKEN_PERCENT,
     TOKEN_EQUAL, TOKEN_EQUAL_EQUAL, TOKEN_BANG_EQUAL,
     TOKEN_LESS, TOKEN_GREATER, TOKEN_LESS_EQUAL, TOKEN_GREATER_EQUAL,
@@ -153,17 +159,13 @@ private:
             if (std::isdigit(source[pos])) {
                 num += source[pos++];
             } else if (source[pos] == '.' && !hasDot) {
-                // Check if next character is also a dot (range operator)
                 if (pos + 1 < source.length() && source[pos + 1] == '.') {
-                    // This is the range operator, stop here
                     break;
                 }
-                // Check if next character is a digit
                 if (pos + 1 < source.length() && std::isdigit(source[pos + 1])) {
                     hasDot = true;
                     num += source[pos++];
                 } else {
-                    // Not part of the number
                     break;
                 }
             } else {
@@ -191,6 +193,15 @@ private:
         if (id == "puts") return {TOKEN_PUTS, id, line};
         if (id == "true") return {TOKEN_TRUE, id, line};
         if (id == "false") return {TOKEN_FALSE, id, line};
+        if (id == "struct") return {TOKEN_STRUCT, id, line};
+        if (id == "impl") return {TOKEN_IMPL, id, line};
+        if (id == "import") return {TOKEN_IMPORT, id, line};
+        if (id == "from") return {TOKEN_FROM, id, line};
+        if (id == "try") return {TOKEN_TRY, id, line};
+        if (id == "catch") return {TOKEN_CATCH, id, line};
+        if (id == "throw") return {TOKEN_THROW, id, line};
+        if (id == "break") return {TOKEN_BREAK, id, line};
+        if (id == "continue") return {TOKEN_CONTINUE, id, line};
 
         return {TOKEN_IDENTIFIER, id, line};
     }
@@ -210,7 +221,6 @@ private:
                 }
                 pos++;
             } else if (source[pos] == '#' && pos + 1 < source.length() && source[pos + 1] == '{') {
-                // String interpolation placeholder
                 str += "#{";
                 pos += 2;
             } else {
@@ -222,13 +232,18 @@ private:
     }
 };
 
+// Forward declarations
+class Interpreter;
+
 // Value types
 struct Value {
-    enum Type { NUMBER, STRING, BOOL, ARRAY, NIL } type;
+    enum Type { NUMBER, STRING, BOOL, ARRAY, STRUCT, NIL } type;
     double num;
     std::string str;
     bool boolean;
     std::vector<Value> array;
+    std::map<std::string, Value> structFields;
+    std::string structType;
 
     Value() : type(NIL), num(0), boolean(false) {}
     Value(double n) : type(NUMBER), num(n), boolean(false) {}
@@ -239,7 +254,6 @@ struct Value {
     std::string toString() const {
         switch (type) {
             case NUMBER: {
-                // Format number nicely (no trailing zeros)
                 if (num == static_cast<int>(num)) {
                     return std::to_string(static_cast<int>(num));
                 }
@@ -259,6 +273,17 @@ struct Value {
                 result += "]";
                 return result;
             }
+            case STRUCT: {
+                std::string result = structType + " { ";
+                bool first = true;
+                for (const auto& field : structFields) {
+                    if (!first) result += ", ";
+                    result += field.first + ": " + field.second.toString();
+                    first = false;
+                }
+                result += " }";
+                return result;
+            }
             case NIL: return "nil";
         }
         return "";
@@ -272,20 +297,37 @@ struct Function {
     size_t bodyEnd;
 };
 
+// Struct definition
+struct StructDef {
+    std::vector<std::string> fields;
+};
+
+// Exception for error handling
+struct ChocoException {
+    std::string message;
+    ChocoException(const std::string& msg) : message(msg) {}
+};
+
 // Interpreter
 class Interpreter {
     std::map<std::string, Value> globalVars;
     std::vector<std::map<std::string, Value>> scopes;
     std::map<std::string, Function> functions;
+    std::map<std::string, StructDef> structDefs;
     std::vector<Token> tokens;
     size_t current = 0;
     bool inFunction = false;
     bool hasReturned = false;
     Value returnValue;
+    bool shouldBreak = false;
+    bool shouldContinue = false;
+    bool inTryCatch = false;
+    std::string currentException;
 
 public:
     Interpreter(const std::vector<Token>& toks) : tokens(toks) {
-        scopes.push_back(std::map<std::string, Value>()); // Global scope
+        scopes.push_back(std::map<std::string, Value>());
+        srand(time(nullptr));
     }
 
     void execute() {
@@ -307,25 +349,21 @@ private:
     }
 
     void setVariable(const std::string& name, const Value& val) {
-        // Check local scopes first (from innermost to outermost)
         for (int i = scopes.size() - 1; i >= 0; i--) {
             if (scopes[i].find(name) != scopes[i].end()) {
                 scopes[i][name] = val;
                 return;
             }
         }
-        // If not found in any scope, set in current scope
         scopes.back()[name] = val;
     }
 
     Value getVariable(const std::string& name) {
-        // Check local scopes first (from innermost to outermost)
         for (int i = scopes.size() - 1; i >= 0; i--) {
             if (scopes[i].find(name) != scopes[i].end()) {
                 return scopes[i][name];
             }
         }
-        // Check global variables
         if (globalVars.find(name) != globalVars.end()) {
             return globalVars[name];
         }
@@ -333,12 +371,26 @@ private:
     }
 
     void statement() {
-        if (hasReturned) return;
+        if (hasReturned || shouldBreak || shouldContinue) return;
 
         if (match(TOKEN_LET)) {
             letStatement();
         } else if (match(TOKEN_FN)) {
             functionDeclaration();
+        } else if (match(TOKEN_STRUCT)) {
+            structDeclaration();
+        } else if (match(TOKEN_IMPORT)) {
+            importStatement();
+        } else if (match(TOKEN_TRY)) {
+            tryStatement();
+        } else if (match(TOKEN_THROW)) {
+            throwStatement();
+        } else if (match(TOKEN_BREAK)) {
+            shouldBreak = true;
+            match(TOKEN_SEMICOLON);
+        } else if (match(TOKEN_CONTINUE)) {
+            shouldContinue = true;
+            match(TOKEN_SEMICOLON);
         } else if (match(TOKEN_PUTS)) {
             putsStatement();
         } else if (match(TOKEN_IF)) {
@@ -397,6 +449,117 @@ private:
         functions[name.value] = {params, bodyStart, bodyEnd};
     }
 
+    void structDeclaration() {
+        Token name = advance();
+        match(TOKEN_LBRACE);
+        
+        std::vector<std::string> fields;
+        while (!match(TOKEN_RBRACE)) {
+            Token field = advance();
+            fields.push_back(field.value);
+            if (!match(TOKEN_COMMA)) {
+                match(TOKEN_RBRACE);
+                break;
+            }
+        }
+        
+        structDefs[name.value] = {fields};
+    }
+
+    void importStatement() {
+        Token module = advance();
+        match(TOKEN_SEMICOLON);
+        
+        std::string filename = module.value + ".choco";
+        std::ifstream file(filename);
+        if (!file) {
+            std::cerr << "Error: Could not import module '" << module.value << "'" << std::endl;
+            return;
+        }
+
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        std::string source = buffer.str();
+
+        Lexer lexer(source);
+        std::vector<Token> moduleTokens = lexer.tokenize();
+        
+        size_t savedCurrent = current;
+        std::vector<Token> savedTokens = tokens;
+        
+        tokens = moduleTokens;
+        current = 0;
+        
+        while (!isAtEnd()) {
+            statement();
+        }
+        
+        tokens = savedTokens;
+        current = savedCurrent;
+    }
+
+    void tryStatement() {
+        match(TOKEN_LBRACE);
+        size_t tryStart = current;
+        
+        int braceCount = 1;
+        size_t tryEnd = current;
+        while (braceCount > 0 && tryEnd < tokens.size()) {
+            if (tokens[tryEnd].type == TOKEN_LBRACE) braceCount++;
+            if (tokens[tryEnd].type == TOKEN_RBRACE) braceCount--;
+            if (braceCount > 0) tryEnd++;
+        }
+        
+        match(TOKEN_CATCH);
+        Token errorVar = advance();
+        match(TOKEN_LBRACE);
+        size_t catchStart = current;
+        
+        braceCount = 1;
+        size_t catchEnd = current;
+        while (braceCount > 0 && catchEnd < tokens.size()) {
+            if (tokens[catchEnd].type == TOKEN_LBRACE) braceCount++;
+            if (tokens[catchEnd].type == TOKEN_RBRACE) braceCount--;
+            if (braceCount > 0) catchEnd++;
+        }
+        
+        current = tryStart;
+        inTryCatch = true;
+        currentException = "";
+        
+        while (current < tryEnd && !hasReturned && currentException.empty()) {
+            statement();
+        }
+        
+        if (!currentException.empty()) {
+            scopes.push_back(std::map<std::string, Value>());
+            setVariable(errorVar.value, Value(currentException));
+            current = catchStart;
+            
+            while (current < catchEnd && !hasReturned) {
+                statement();
+            }
+            
+            scopes.pop_back();
+            currentException = "";
+        }
+        
+        inTryCatch = false;
+        current = catchEnd + 1;
+    }
+
+    void throwStatement() {
+        Value msg = expression();
+        match(TOKEN_SEMICOLON);
+        
+        if (inTryCatch) {
+            currentException = msg.toString();
+        } else {
+            std::cerr << "Uncaught exception: " << msg.toString() << std::endl;
+            exit(1);
+        }
+    }
+
     void returnStatement() {
         returnValue = expression();
         hasReturned = true;
@@ -419,7 +582,6 @@ private:
         
         size_t thenStart = current;
         
-        // Find matching closing brace for then block
         int braceCount = 1;
         size_t thenEnd = current;
         
@@ -437,7 +599,6 @@ private:
         size_t elseStart = 0, elseEnd = 0;
         bool hasElse = false;
         
-        // Check for else
         size_t afterThen = thenEnd + 1;
         if (afterThen < tokens.size() && tokens[afterThen].type == TOKEN_ELSE) {
             hasElse = true;
@@ -460,7 +621,6 @@ private:
             }
         }
 
-        // Evaluate condition as boolean
         bool shouldExecute = false;
         if (condition.type == Value::BOOL) {
             shouldExecute = condition.boolean;
@@ -472,17 +632,16 @@ private:
 
         if (shouldExecute) {
             current = thenStart;
-            while (current < thenEnd && !isAtEnd() && !hasReturned) {
+            while (current < thenEnd && !isAtEnd() && !hasReturned && !shouldBreak && !shouldContinue) {
                 statement();
             }
         } else if (hasElse) {
             current = elseStart;
-            while (current < elseEnd && !isAtEnd() && !hasReturned) {
+            while (current < elseEnd && !isAtEnd() && !hasReturned && !shouldBreak && !shouldContinue) {
                 statement();
             }
         }
         
-        // Move past the entire if-else statement
         current = hasElse ? (elseEnd + 1) : (thenEnd + 1);
     }
 
@@ -503,8 +662,20 @@ private:
         
         while (condition.type == Value::BOOL && condition.boolean && !hasReturned) {
             current = bodyStart;
-            while (current < bodyEnd && !isAtEnd() && !hasReturned) {
+            shouldBreak = false;
+            shouldContinue = false;
+            
+            while (current < bodyEnd && !isAtEnd() && !hasReturned && !shouldBreak) {
                 statement();
+                if (shouldContinue) {
+                    shouldContinue = false;
+                    break;
+                }
+            }
+            
+            if (shouldBreak) {
+                shouldBreak = false;
+                break;
             }
             
             current = conditionStart;
@@ -539,7 +710,6 @@ private:
         
         size_t loopBodyStart = current;
         
-        // Find matching closing brace
         int depth = 1;
         size_t loopBodyEnd = current;
         
@@ -554,33 +724,37 @@ private:
             }
         }
         
-        // Execute loop if we have valid numbers
         if (start.type == Value::NUMBER && end.type == Value::NUMBER) {
             int iStart = static_cast<int>(start.num);
             int iEnd = static_cast<int>(end.num);
             
             for (int i = iStart; i < iEnd; i++) {
-                if (hasReturned) break;
+                if (hasReturned || shouldBreak) break;
                 
-                // Set loop variable
                 setVariable(iterVar.value, Value(static_cast<double>(i)));
                 
-                // Reset to start of body
                 size_t savedCurrent = current;
                 current = loopBodyStart;
+                shouldContinue = false;
                 
-                // Execute body statements
                 while (current < loopBodyEnd) {
-                    if (hasReturned || isAtEnd()) break;
+                    if (hasReturned || isAtEnd() || shouldBreak) break;
                     statement();
+                    if (shouldContinue) {
+                        shouldContinue = false;
+                        break;
+                    }
                 }
                 
-                // Restore current (not needed but for safety)
+                if (shouldBreak) {
+                    shouldBreak = false;
+                    break;
+                }
+                
                 current = savedCurrent;
             }
         }
         
-        // Move past the closing brace
         current = loopBodyEnd + 1;
     }
 
@@ -594,7 +768,6 @@ private:
         while (match(TOKEN_OR)) {
             Value right = logicalAnd();
             
-            // Convert to boolean
             bool leftBool = false;
             if (left.type == Value::BOOL) leftBool = left.boolean;
             else if (left.type == Value::NUMBER) leftBool = left.num != 0;
@@ -614,7 +787,6 @@ private:
         while (match(TOKEN_AND)) {
             Value right = comparison();
             
-            // Convert to boolean
             bool leftBool = false;
             if (left.type == Value::BOOL) leftBool = left.boolean;
             else if (left.type == Value::NUMBER) leftBool = left.num != 0;
@@ -713,10 +885,10 @@ private:
     Value call() {
         Value val = primary();
         
-        while (match(TOKEN_LPAREN)) {
-            if (val.type == Value::STRING) {
-                std::string funcName = val.str;
-                if (functions.find(funcName) != functions.end()) {
+        while (true) {
+            if (match(TOKEN_LPAREN)) {
+                if (val.type == Value::STRING) {
+                    std::string funcName = val.str;
                     std::vector<Value> args;
                     while (!match(TOKEN_RPAREN)) {
                         args.push_back(expression());
@@ -727,18 +899,35 @@ private:
                     }
                     val = callFunction(funcName, args);
                 }
-            }
-        }
-        
-        // Array indexing
-        if (match(TOKEN_LBRACKET)) {
-            Value index = expression();
-            match(TOKEN_RBRACKET);
-            if (val.type == Value::ARRAY && index.type == Value::NUMBER) {
-                int idx = static_cast<int>(index.num);
-                if (idx >= 0 && idx < static_cast<int>(val.array.size())) {
-                    return val.array[idx];
+            } else if (match(TOKEN_LBRACKET)) {
+                Value index = expression();
+                match(TOKEN_RBRACKET);
+                if (val.type == Value::ARRAY && index.type == Value::NUMBER) {
+                    int idx = static_cast<int>(index.num);
+                    if (idx >= 0 && idx < static_cast<int>(val.array.size())) {
+                        val = val.array[idx];
+                    } else {
+                        val = Value();
+                    }
+                } else if (val.type == Value::STRING && index.type == Value::NUMBER) {
+                    int idx = static_cast<int>(index.num);
+                    if (idx >= 0 && idx < static_cast<int>(val.str.length())) {
+                        val = Value(std::string(1, val.str[idx]));
+                    } else {
+                        val = Value();
+                    }
                 }
+            } else if (match(TOKEN_DOT)) {
+                Token field = advance();
+                if (val.type == Value::STRUCT) {
+                    if (val.structFields.find(field.value) != val.structFields.end()) {
+                        val = val.structFields[field.value];
+                    } else {
+                        val = Value();
+                    }
+                }
+            } else {
+                break;
             }
         }
         
@@ -746,21 +935,256 @@ private:
     }
 
     Value callFunction(const std::string& name, const std::vector<Value>& args) {
+        // Standard library functions
+        if (name == "len") {
+            if (args.size() > 0) {
+                if (args[0].type == Value::ARRAY) {
+                    return Value(static_cast<double>(args[0].array.size()));
+                } else if (args[0].type == Value::STRING) {
+                    return Value(static_cast<double>(args[0].str.length()));
+                }
+            }
+            return Value(0.0);
+        }
+        
+        if (name == "push") {
+            if (args.size() >= 2 && args[0].type == Value::ARRAY) {
+                Value arr = args[0];
+                arr.array.push_back(args[1]);
+                return arr;
+            }
+            return Value();
+        }
+        
+        if (name == "pop") {
+            if (args.size() > 0 && args[0].type == Value::ARRAY) {
+                Value arr = args[0];
+                if (!arr.array.empty()) {
+                    Value last = arr.array.back();
+                    arr.array.pop_back();
+                    return last;
+                }
+            }
+            return Value();
+        }
+        
+        if (name == "sqrt") {
+            if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return Value(sqrt(args[0].num));
+            }
+            return Value();
+        }
+        
+        if (name == "pow") {
+            if (args.size() >= 2 && args[0].type == Value::NUMBER && args[1].type == Value::NUMBER) {
+                return Value(pow(args[0].num, args[1].num));
+            }
+            return Value();
+        }
+        
+        if (name == "abs") {
+            if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return Value(fabs(args[0].num));
+            }
+            return Value();
+        }
+        
+        if (name == "floor") {
+            if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return Value(floor(args[0].num));
+            }
+            return Value();
+        }
+        
+        if (name == "ceil") {
+            if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return Value(ceil(args[0].num));
+            }
+            return Value();
+        }
+        
+        if (name == "round") {
+            if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return Value(round(args[0].num));
+            }
+            return Value();
+        }
+        
+        if (name == "min") {
+            if (args.size() >= 2 && args[0].type == Value::NUMBER && args[1].type == Value::NUMBER) {
+                return Value(std::min(args[0].num, args[1].num));
+            }
+            return Value();
+        }
+        
+        if (name == "max") {
+            if (args.size() >= 2 && args[0].type == Value::NUMBER && args[1].type == Value::NUMBER) {
+                return Value(std::max(args[0].num, args[1].num));
+            }
+            return Value();
+        }
+        
+        if (name == "random") {
+            return Value(static_cast<double>(rand()) / RAND_MAX);
+        }
+        
+        if (name == "random_int") {
+            if (args.size() >= 2 && args[0].type == Value::NUMBER && args[1].type == Value::NUMBER) {
+                int min = static_cast<int>(args[0].num);
+                int max = static_cast<int>(args[1].num);
+                return Value(static_cast<double>(min + rand() % (max - min + 1)));
+            }
+            return Value();
+        }
+        
+        if (name == "str") {
+            if (args.size() > 0) {
+                return Value(args[0].toString());
+            }
+            return Value("");
+        }
+        
+        if (name == "int") {
+            if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return Value(static_cast<double>(static_cast<int>(args[0].num)));
+            } else if (args.size() > 0 && args[0].type == Value::STRING) {
+                try {
+                    return Value(static_cast<double>(std::stoi(args[0].str)));
+                } catch (...) {
+                    return Value(0.0);
+                }
+            }
+            return Value();
+        }
+        
+        if (name == "float") {
+            if (args.size() > 0 && args[0].type == Value::STRING) {
+                try {
+                    return Value(std::stod(args[0].str));
+                } catch (...) {
+                    return Value(0.0);
+                }
+            } else if (args.size() > 0 && args[0].type == Value::NUMBER) {
+                return args[0];
+            }
+            return Value();
+        }
+        
+        if (name == "uppercase") {
+            if (args.size() > 0 && args[0].type == Value::STRING) {
+                std::string result = args[0].str;
+                std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+                return Value(result);
+            }
+            return Value();
+        }
+        
+        if (name == "lowercase") {
+            if (args.size() > 0 && args[0].type == Value::STRING) {
+                std::string result = args[0].str;
+                std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+                return Value(result);
+            }
+            return Value();
+        }
+        
+        if (name == "substr") {
+            if (args.size() >= 3 && args[0].type == Value::STRING && 
+                args[1].type == Value::NUMBER && args[2].type == Value::NUMBER) {
+                int start = static_cast<int>(args[1].num);
+                int length = static_cast<int>(args[2].num);
+                return Value(args[0].str.substr(start, length));
+            }
+            return Value();
+        }
+        
+        if (name == "split") {
+            if (args.size() >= 2 && args[0].type == Value::STRING && args[1].type == Value::STRING) {
+                std::vector<Value> result;
+                std::string str = args[0].str;
+                std::string delim = args[1].str;
+                size_t pos = 0;
+                while ((pos = str.find(delim)) != std::string::npos) {
+                    result.push_back(Value(str.substr(0, pos)));
+                    str.erase(0, pos + delim.length());
+                }
+                result.push_back(Value(str));
+                return Value(result);
+            }
+            return Value();
+        }
+        
+        if (name == "join") {
+            if (args.size() >= 2 && args[0].type == Value::ARRAY && args[1].type == Value::STRING) {
+                std::string result;
+                for (size_t i = 0; i < args[0].array.size(); i++) {
+                    result += args[0].array[i].toString();
+                    if (i < args[0].array.size() - 1) {
+                        result += args[1].str;
+                    }
+                }
+                return Value(result);
+            }
+            return Value();
+        }
+        
+        if (name == "read_file") {
+            if (args.size() > 0 && args[0].type == Value::STRING) {
+                std::ifstream file(args[0].str);
+                if (file) {
+                    std::stringstream buffer;
+                    buffer << file.rdbuf();
+                    return Value(buffer.str());
+                }
+            }
+            return Value();
+        }
+        
+        if (name == "write_file") {
+            if (args.size() >= 2 && args[0].type == Value::STRING && args[1].type == Value::STRING) {
+                std::ofstream file(args[0].str);
+                if (file) {
+                    file << args[1].str;
+                    return Value(true);
+                }
+                return Value(false);
+            }
+            return Value();
+        }
+        
+        if (name == "append_file") {
+            if (args.size() >= 2 && args[0].type == Value::STRING && args[1].type == Value::STRING) {
+                std::ofstream file(args[0].str, std::ios::app);
+                if (file) {
+                    file << args[1].str;
+                    return Value(true);
+                }
+                return Value(false);
+            }
+            return Value();
+        }
+        
+        if (name == "file_exists") {
+            if (args.size() > 0 && args[0].type == Value::STRING) {
+                std::ifstream file(args[0].str);
+                return Value(file.good());
+            }
+            return Value(false);
+        }
+
+        // User-defined functions
         if (functions.find(name) == functions.end()) {
             return Value();
         }
 
         Function& func = functions[name];
         
-        // Create new scope for function
         scopes.push_back(std::map<std::string, Value>());
         
-        // Bind parameters
         for (size_t i = 0; i < func.params.size() && i < args.size(); i++) {
             scopes.back()[func.params[i]] = args[i];
         }
 
-        // Execute function body
         size_t savedCurrent = current;
         current = func.bodyStart;
         hasReturned = false;
@@ -773,7 +1197,6 @@ private:
         Value result = returnValue;
         hasReturned = false;
         
-        // Pop function scope
         scopes.pop_back();
         
         current = savedCurrent;
@@ -787,7 +1210,6 @@ private:
         if (match(TOKEN_STRING)) {
             std::string str = tokens[current - 1].value;
             
-            // Handle string interpolation
             size_t pos = 0;
             while ((pos = str.find("#{", pos)) != std::string::npos) {
                 size_t end = str.find("}", pos);
@@ -817,9 +1239,30 @@ private:
         if (match(TOKEN_IDENTIFIER)) {
             std::string name = tokens[current - 1].value;
             
-            // Check if it's a function name
+            // Check if it's a struct constructor
+            if (structDefs.find(name) != structDefs.end() && peek().type == TOKEN_LBRACE) {
+                match(TOKEN_LBRACE);
+                Value structVal;
+                structVal.type = Value::STRUCT;
+                structVal.structType = name;
+                
+                while (!match(TOKEN_RBRACE)) {
+                    Token fieldName = advance();
+                    match(TOKEN_COLON);
+                    Value fieldValue = expression();
+                    structVal.structFields[fieldName.value] = fieldValue;
+                    
+                    if (!match(TOKEN_COMMA)) {
+                        match(TOKEN_RBRACE);
+                        break;
+                    }
+                }
+                
+                return structVal;
+            }
+            
             if (functions.find(name) != functions.end()) {
-                return Value(name); // Return function name as string for later call
+                return Value(name);
             }
             
             return getVariable(name);
