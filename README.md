@@ -10,38 +10,3 @@
 
 **Simple and Expressive** • **Fast to Learn** • **Great Control**
 </div>
-
----
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-git clone https://github.com/mochacinno-dev/ChocoLang.git
-cd ChocoLang
-g++ -o choco main.cpp -std=c++11
-```
-
-### Your First Program
-
-Create a file `hello.choco`:
-
-```choco
-// Hello World in Choco
-let name = "World";
-puts "Hello, #{name}!";
-
-fn greet(person) {
-    return "Welcome to ChocoLang, #{person}!";
-}
-
-puts greet(name);
-```
-
-Run it:
-
-```bash
-./choco hello.choco
-```
-
