@@ -4,9 +4,9 @@
 
 **A Sweet Programming Language**
 
-[![Version](https://img.shields.io/badge/version-3.0.0-chocolate.svg)](https://github.com/yourusername/chocolang)
-[![License](https://img.shields.io/badge/license-MIT-brown.svg)](LICENSE)
-[![Made with](https://img.shields.io/badge/version-Milky%20Way-saddlebrown.svg)](https://github.com/yourusername/chocolang)
+[![Version](https://img.shields.io/badge/version-0.3.5-chocolate.svg)](https://github.com/yourusername/chocolang)
+[![License](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-brown.svg)](LICENSE)
+[![Made with](https://img.shields.io/badge/version-Caramel%20Swirl-saddlebrown.svg)](https://github.com/yourusername/chocolang)
 
 **Simple and Expressive** • **Fast to Learn** • **Great Control**
 </div>
