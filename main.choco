@@ -1,4 +1,4 @@
-puts "<=== SHOWCASE: ChocoLang 1.0.0 ===>";
+print "<=== SHOWCASE: ChocoLang 1.0.0 ===>";
 
 // ============================================
 
@@ -7,88 +7,88 @@ fn greet(name) {
 }
 
 let greeting = greet("ChocoLang User");
-puts greeting;
+print greeting;
 
 // ============================================
 
-puts "ChocoLang is a language, not made to be easy, but to be comfortable.";
-puts "It aims to provide a balance between simplicity and functionality.";
-puts "It is designed for developers who want more control over their code without sacrificing readability.";
-puts "It supports functions, arrays, loops, and more advanced features.";
+print "ChocoLang is a language, not made to be easy, but to be comfortable.";
+print "It aims to provide a balance between simplicity and functionality.";
+print "It is designed for developers who want more control over their code without sacrificing readability.";
+print "It supports functions, arrays, loops, and more advanced features.";
 
 // ============================================
 
-puts "<=== ROADMAP ===>";
+print "<=== ROADMAP ===>";
 
-puts "<=== Version 0.1.0 - Chocolate Delight ===>";
-puts "1. Basic syntax and structure - DONE";
-puts "2. Variables and data types - DONE";
-puts "3. Control flow (if/else, loops) - DONE";
+print "<=== Version 0.1.0 - Chocolate Delight ===>";
+print "1. Basic syntax and structure - DONE";
+print "2. Variables and data types - DONE";
+print "3. Control flow (if/else, loops) - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.1.5 - Waffle Crunch Patch";
-puts "4. Functions (declaration, parameters, return values) - DONE";
-puts "5. Arrays and basic operations on them - DONE";
-puts "6. Basic I/O (print to console) - DONE";
-puts "7. Comments - DONE";
+print "<=== Version 0.1.5 - Waffle Crunch Patch";
+print "4. Functions (declaration, parameters, return values) - DONE";
+print "5. Arrays and basic operations on them - DONE";
+print "6. Basic I/O (print to console) - DONE";
+print "7. Comments - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.2.0 - Sweet Wonderland";
-puts "6. Structs/custom types - DONE";
-puts "7. Module system (import/export) - DONE";
-puts "8. File I/O - DONE";
-puts "9. Error handling (try/catch) - DONE";
-puts "10. Standard library basics - DONE";
+print "<=== Version 0.2.0 - Sweet Wonderland";
+print "6. Structs/custom types - DONE";
+print "7. Module system (import/export) - DONE";
+print "8. File I/O - DONE";
+print "9. Error handling (try/catch) - DONE";
+print "10. Standard library basics - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.3.0 - Milky Way";
-puts "11. Type system with inference - DONE";
-puts "12. Closures and lambdas - DONE";
-puts "13. Async/await - DONE";
+print "<=== Version 0.3.0 - Milky Way";
+print "11. Type system with inference - DONE";
+print "12. Closures and lambdas - DONE";
+print "13. Async/await - DONE";
 
-puts "";    
+print "";    
 
-puts "<=== Version 0.3.5 - Caramel Swirl Patch";
-puts "14. Pattern matching - DONE";
-puts "15. Generics - DONE";
+print "<=== Version 0.3.5 - Caramel Swirl Patch";
+print "14. Pattern matching - DONE";
+print "15. Generics - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.4.0 - Cocoa Dream";
-puts "17. REPL - DONE";
+print "<=== Version 0.4.0 - Cocoa Dream";
+print "17. REPL - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.4.5 - Pistachio Twist Patch";
-puts "18. Performance optimizations - DONE";
+print "<=== Version 0.4.5 - Pistachio Twist Patch";
+print "18. Performance optimizations - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.4.8 - Mocha Madness Mini-Patch ===>";
-puts "19. Enhanced error messages - DONE";
+print "<=== Version 0.4.8 - Mocha Madness Mini-Patch ===>";
+print "19. Enhanced error messages - DONE";
 
-puts "";
+print "";
 
-puts "<=== Version 0.5.0 - Nutty Nougat";
-puts "20. Input Functionality - DONE";
-puts "";
+print "<=== Version 0.5.0 - Nutty Nougat";
+print "20. Input Functionality - DONE";
+print "";
 
-puts "<=== Version 0.5.5 - Hazelnut Heaven Patch ===>";
-puts "21. Testing framework - DONE";
-puts "";
+print "<=== Version 0.5.5 - Hazelnut Heaven Patch ===>";
+print "21. Testing framework - DONE";
+print "";
 
-puts "<=== Version 0.6.0 - Almond Amour ===>";
-puts "22. GUI Library";
-puts "";
+print "<=== Version 0.6.0 - Almond Amour ===>";
+print "22. GUI Library";
+print "";
 
-puts "<=== Version 0.6.5 - Macadamia Magic Patch ===>";
-puts "23. Stability improvements";
+print "<=== Version 0.6.5 - Macadamia Magic Patch ===>";
+print "23. Stability improvements";
 
-puts "";
+print "";
 
-puts "<=== Version 1.0.0 - Choco Crunch ===>";
-puts "24. Documentation generator";
-puts "25. Interpreted -> Compiled transition";
+print "<=== Version 1.0.0 - Choco Crunch ===>";
+print "24. Documentation generator";
+print "25. Interpreted -> Compiled transition";

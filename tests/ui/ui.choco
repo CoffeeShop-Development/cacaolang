@@ -330,11 +330,4 @@ gui_on(btn_mr, "clicked", "press_mr");
 gui_on(btn_m_plus, "clicked", "press_m_plus");
 gui_on(btn_m_minus, "clicked", "press_m_minus");
 
-puts "Calculator initialized!";
-puts "Features:";
-puts "  - Basic operations (+, -, *, /)";
-puts "  - Memory functions (MC, MR, M+, M-)";
-puts "  - Square root, percent, sign change";
-puts "  - Decimal support";
-
 gui_run();

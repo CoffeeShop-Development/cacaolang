@@ -1,1 +1,1 @@
-puts "hello" // Parse Error
+print "hello" // Parse Error

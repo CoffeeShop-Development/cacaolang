@@ -25,7 +25,7 @@
 enum TokenType {
     TOKEN_EOF, TOKEN_NUMBER, TOKEN_STRING, TOKEN_IDENTIFIER,
     TOKEN_LET, TOKEN_FN, TOKEN_IF, TOKEN_ELSE, TOKEN_WHILE, TOKEN_FOR, TOKEN_IN,
-    TOKEN_RETURN, TOKEN_PUTS, TOKEN_TRUE, TOKEN_FALSE, TOKEN_STRUCT, TOKEN_IMPL,
+    TOKEN_RETURN, TOKEN_PRINT, TOKEN_TRUE, TOKEN_FALSE, TOKEN_STRUCT, TOKEN_IMPL,
     TOKEN_IMPORT, TOKEN_FROM, TOKEN_TRY, TOKEN_CATCH, TOKEN_THROW, TOKEN_BREAK, TOKEN_CONTINUE,
     TOKEN_MATCH, TOKEN_CASE, TOKEN_DEFAULT, TOKEN_ARROW_FAT, TOKEN_ASYNC, TOKEN_AWAIT,
     TOKEN_PLUS, TOKEN_MINUS, TOKEN_STAR, TOKEN_SLASH, TOKEN_PERCENT,
@@ -280,7 +280,7 @@ private:
 const std::unordered_map<std::string, TokenType> Lexer::keywords = {
     {"let", TOKEN_LET}, {"fn", TOKEN_FN}, {"if", TOKEN_IF}, {"else", TOKEN_ELSE},
     {"while", TOKEN_WHILE}, {"for", TOKEN_FOR}, {"in", TOKEN_IN}, {"return", TOKEN_RETURN},
-    {"puts", TOKEN_PUTS}, {"true", TOKEN_TRUE}, {"false", TOKEN_FALSE}, {"struct", TOKEN_STRUCT},
+    {"print", TOKEN_PRINT}, {"true", TOKEN_TRUE}, {"false", TOKEN_FALSE}, {"struct", TOKEN_STRUCT},
     {"impl", TOKEN_IMPL}, {"import", TOKEN_IMPORT}, {"from", TOKEN_FROM}, {"try", TOKEN_TRY},
     {"catch", TOKEN_CATCH}, {"throw", TOKEN_THROW}, {"break", TOKEN_BREAK}, {"continue", TOKEN_CONTINUE},
     {"match", TOKEN_MATCH}, {"case", TOKEN_CASE}, {"default", TOKEN_DEFAULT}, {"async", TOKEN_ASYNC},
@@ -985,8 +985,8 @@ public:
             }
             shouldContinue = true;
             match(TOKEN_SEMICOLON);
-        } else if (match(TOKEN_PUTS)) {
-            putsStatement();
+        } else if (match(TOKEN_PRINT)) {
+            printStatement();
         } else if (match(TOKEN_IF)) {
             ifStatement();
         } else if (match(TOKEN_WHILE)) {
@@ -1286,10 +1286,10 @@ public:
         expect(TOKEN_SEMICOLON, "Expected ';' after return statement");
     }
 
-    void putsStatement() {
+    void printStatement() {
         Value val = expression();
         std::cout << val.toString() << std::endl;
-        expect(TOKEN_SEMICOLON, "Expected ';' after puts statement");
+        expect(TOKEN_SEMICOLON, "Expected ';' after print statement");
     }
 
     void ifStatement() {
@@ -1903,9 +1903,9 @@ int main(int argc, char* argv[]) {
                 std::cout << std::endl;
                 std::cout << "Examples:" << std::endl;
                 std::cout << "  let x = 10;" << std::endl;
-                std::cout << "  puts x + 5;" << std::endl;
+                std::cout << "  print x + 5;" << std::endl;
                 std::cout << "  fn greet(name) { return \"Hello, \" + name; }" << std::endl;
-                std::cout << "  puts greet(\"World\");" << std::endl;
+                std::cout << "  print greet(\"World\");" << std::endl;
                 lineNumber++;
                 continue;
             }

@@ -6,13 +6,13 @@
 // Made by Camila "Mocha" Rose
 //////////////////////////////////////
 
-puts "=== Choco Language - Phase 1 Demo ===";
-puts "";
+print "=== Choco Language - Phase 1 Demo ===";
+print "";
 
 // ============================================
 // 1. Functions with Parameters and Returns
 // ============================================
-puts "=== Functions ===";
+print "=== Functions ===";
 
 fn add(a, b) {
     return a + b;
@@ -30,9 +30,9 @@ let sum = add(10, 20);
 let product = multiply(5, 6);
 let greeting = greet("Choco");
 
-puts sum;
-puts product;
-puts greeting;
+print sum;
+print product;
+print greeting;
 
 // Factorial function (recursive-style with loop)
 fn factorial(n) {
@@ -45,102 +45,102 @@ fn factorial(n) {
     return result;
 }
 
-puts "Factorial of 5:";
-puts factorial(5);
+print "Factorial of 5:";
+print factorial(5);
 
 // ============================================
 // 2. Arrays and Array Operations
 // ============================================
-puts "";
-puts "=== Arrays ===";
+print "";
+print "=== Arrays ===";
 
 let numbers = [1, 2, 3, 4, 5];
 let fruits = ["apple", "banana", "cherry"];
 let mixed = [42, "hello", true, 3.14];
 
-puts "Numbers array:";
-puts numbers;
+print "Numbers array:";
+print numbers;
 
-puts "Fruits array:";
-puts fruits;
+print "Fruits array:";
+print fruits;
 
-puts "Mixed array:";
-puts mixed;
+print "Mixed array:";
+print mixed;
 
 // Array indexing
-puts "First number:";
-puts numbers[0];
+print "First number:";
+print numbers[0];
 
-puts "Second fruit:";
-puts fruits[1];
+print "Second fruit:";
+print fruits[1];
 
-puts "Mixed element:";
-puts mixed[2];
+print "Mixed element:";
+print mixed[2];
 
 // Working with arrays
 let scores = [85, 92, 78, 95, 88];
-puts "Test scores:";
-puts scores;
+print "Test scores:";
+print scores;
 
 // ============================================
 // 3. For Loops with Ranges
 // ============================================
-puts "";
-puts "=== For Loops ===";
+print "";
+print "=== For Loops ===";
 
-puts "Count from 0 to 4:";
+print "Count from 0 to 4:";
 for i in 0..5 {
-    puts i;
+    print i;
 }
 
-puts "Even numbers 0-10:";
+print "Even numbers 0-10:";
 for i in 0..6 {
     let even = i * 2;
-    puts even;
+    print even;
 }
 
-puts "Sum using for loop:";
+print "Sum using for loop:";
 let total = 0;
 for i in 1..11 {
     total = total + i;
 }
-puts total;
+print total;
 
 // ============================================
 // 4. String Interpolation
 // ============================================
-puts "";
-puts "=== String Interpolation ===";
+print "";
+print "=== String Interpolation ===";
 
 let name = "Alice";
 let age = 25;
 let city = "Wonderland";
 
 let message = "My name is #{name} and I am #{age} years old.";
-puts message;
+print message;
 
 let location = "I live in #{city}!";
-puts location;
+print location;
 
 fn introduce(person, years) {
     let intro = "This is #{person}, who is #{years} years old.";
     return intro;
 }
 
-puts introduce("Bob", 30);
+print introduce("Bob", 30);
 
 // ============================================
 // 5. Logical Operators (&&, ||, !)
 // ============================================
-puts "";
-puts "=== Logical Operators ===";
+print "";
+print "=== Logical Operators ===";
 
 let isAdult = true;
 let hasLicense = true;
 let canDrive = isAdult && hasLicense;
 
 if canDrive {
-    puts "Can drive: YES";
+    print "Can drive: YES";
 }
 
 let isSunny = false;
@@ -148,14 +148,14 @@ let isWarm = true;
 let niceWeather = isSunny || isWarm;
 
 if niceWeather {
-    puts "Weather is nice!";
+    print "Weather is nice!";
 }
 
 let isRaining = false;
 let notRaining = !isRaining;
 
 if notRaining {
-    puts "It's not raining!";
+    print "It's not raining!";
 }
 
 // Complex logical expressions
@@ -164,51 +164,51 @@ let y = 20;
 let z = 15;
 
 if x < y && y > z {
-    puts "x < y AND y > z";
+    print "x < y AND y > z";
 }
 
 if x > 5 || z < 10 {
-    puts "x > 5 OR z < 10";
+    print "x > 5 OR z < 10";
 }
 
 // ============================================
 // 6. Modulo Operator (%)
 // ============================================
-puts "";
-puts "=== Modulo Operator ===";
+print "";
+print "=== Modulo Operator ===";
 
-puts "Even or Odd check:";
+print "Even or Odd check:";
 for i in 0..10 {
     let remainder = i % 2;
     if remainder == 0 {
         let msg = "#{i} is even";
-        puts msg;
+        print msg;
     } else {
         let msg = "#{i} is odd";
-        puts msg;
+        print msg;
     }
 }
 
 // ============================================
 // 7. Combined Example: FizzBuzz
 // ============================================
-puts "";
-puts "=== FizzBuzz (1-20) ===";
+print "";
+print "=== FizzBuzz (1-20) ===";
 
 for i in 1..21 {
     let by3 = i % 3;
     let by5 = i % 5;
     
     if by3 == 0 && by5 == 0 {
-        puts "FizzBuzz";
+        print "FizzBuzz";
     } else {
         if by3 == 0 {
-            puts "Fizz";
+            print "Fizz";
         } else {
             if by5 == 0 {
-                puts "Buzz";
+                print "Buzz";
             } else {
-                puts i;
+                print i;
             }
         }
     }
@@ -217,8 +217,8 @@ for i in 1..21 {
 // ============================================
 // 8. Function with Array Parameter
 // ============================================
-puts "";
-puts "=== Functions with Arrays ===";
+print "";
+print "=== Functions with Arrays ===";
 
 fn sumArray(arr) {
     let sum = 0;
@@ -232,8 +232,8 @@ fn sumArray(arr) {
 
 let myNumbers = [10, 20, 30, 40, 50];
 let arraySum = sumArray(myNumbers);
-puts "Sum of array:";
-puts arraySum;
+print "Sum of array:";
+print arraySum;
 
 // ============================================
 // 9. Nested Functions and Complex Logic
@@ -264,8 +264,8 @@ fn isPrime(n) {
 // ============================================
 // 10. Advanced Function Example
 // ============================================
-puts "";
-puts "=== Advanced Functions ===";
+print "";
+print "=== Advanced Functions ===";
 
 fn fibonacci(n) {
     if n <= 1 {
@@ -286,46 +286,46 @@ fn fibonacci(n) {
     return b;
 }
 
-puts "Fibonacci sequence (first 10):";
+print "Fibonacci sequence (first 10):";
 for i in 0..10 {
     let fib = fibonacci(i);
-    puts fib;
+    print fib;
 }
 
 // ============================================
 // 11. String Concatenation
 // ============================================
-puts "";
-puts "=== String Operations ===";
+print "";
+print "=== String Operations ===";
 
 let first = "Hello";
 let second = "World";
 let combined = first + " " + second;
-puts combined;
+print combined;
 
 let prefix = "Number: ";
 let number = 42;
 // Note: Direct number to string in interpolation
 let result = "#{prefix}#{number}";
-puts result;
+print result;
 
 // ============================================
 // 12. Nested Loops with Arrays
 // ============================================
-puts "";
-puts "=== Nested Loops ===";
+print "";
+print "=== Nested Loops ===";
 
-puts "Multiplication table (3x3):";
+print "Multiplication table (3x3):";
 for i in 1..4 {
     for j in 1..4 {
         let product = i * j;
-        puts product;
+        print product;
     }
 }
 
-puts "";
-puts "=== Phase 1 Demo Complete! ===";
-puts "Features: Functions, Arrays, For Loops, String Interpolation, Logical Operators";
+print "";
+print "=== Phase 1 Demo Complete! ===";
+print "Features: Functions, Arrays, For Loops, String Interpolation, Logical Operators";
 
 //////////////////////////////////////
 // ChocoLang 2.0.0 - Sweet Wonderland
@@ -333,13 +333,13 @@ puts "Features: Functions, Arrays, For Loops, String Interpolation, Logical Oper
 // Made by Camila "Mocha" Rose
 //////////////////////////////////////
 
-puts "=== Choco Phase 2 Demo ===";
-puts "";
+print "=== Choco Phase 2 Demo ===";
+print "";
 
 // ============================================
 // 1. Structs / Custom Types
 // ============================================
-puts "=== Structs ===";
+print "=== Structs ===";
 
 struct Person {
     name,
@@ -350,156 +350,156 @@ struct Person {
 let alice = Person { name: "Alice", age: 30, city: "NYC" };
 let bob = Person { name: "Bob", age: 25, city: "LA" };
 
-puts "Person 1:";
-puts alice;
+print "Person 1:";
+print alice;
 
-puts "Accessing fields:";
-puts alice.name;
-puts alice.age;
-puts alice.city;
+print "Accessing fields:";
+print alice.name;
+print alice.age;
+print alice.city;
 
-puts "Person 2:";
-puts bob.name;
+print "Person 2:";
+print bob.name;
 
 // ============================================
 // 2. Break and Continue
 // ============================================
-puts "";
-puts "=== Break and Continue ===";
+print "";
+print "=== Break and Continue ===";
 
-puts "Break example - stop at 5:";
+print "Break example - stop at 5:";
 for i in 0..10 {
     if i == 5 {
     break;
     }
-    puts i;
+    print i;
 }
 
-puts "Continue example - skip even numbers:";
+print "Continue example - skip even numbers:";
 for i in 0..10 {
     if i % 2 == 0 {
         continue;
     }
-    puts i;
+    print i;
 }
 
 // ============================================
 // 3. Standard Library - Math Functions
 // ============================================
-puts "";
-puts "=== Math Functions ===";
+print "";
+print "=== Math Functions ===";
 
 let num = 16;
-puts "sqrt(16):";
-puts sqrt(num);
+print "sqrt(16):";
+print sqrt(num);
 
-puts "pow(2, 8):";
-puts pow(2, 8);
+print "pow(2, 8):";
+print pow(2, 8);
 
-puts "abs(-42):";
-puts abs(-42);
+print "abs(-42):";
+print abs(-42);
 
-puts "floor(3.7):";
-puts floor(3.7);
+print "floor(3.7):";
+print floor(3.7);
 
-puts "ceil(3.2):";
-puts ceil(3.2);
+print "ceil(3.2):";
+print ceil(3.2);
 
-puts "round(3.5):";
-puts round(3.5);
+print "round(3.5):";
+print round(3.5);
 
-puts "min(5, 3):";
-puts min(5, 3);
+print "min(5, 3):";
+print min(5, 3);
 
-puts "max(5, 3):";
-puts max(5, 3);
+print "max(5, 3):";
+print max(5, 3);
 
 // ============================================
 // 4. Random Numbers
 // ============================================
-puts "";
-puts "=== Random Numbers ===";
+print "";
+print "=== Random Numbers ===";
 
-puts "Random float (0-1):";
-puts random();
+print "Random float (0-1):";
+print random();
 
-puts "Random int (1-10):";
-puts random_int(1, 10);
+print "Random int (1-10):";
+print random_int(1, 10);
 
 // ============================================
 // 5. Array Functions
 // ============================================
-puts "";
-puts "=== Array Functions ===";
+print "";
+print "=== Array Functions ===";
 
 let numbers = [1, 2, 3];
-puts "Original array:";
-puts numbers;
+print "Original array:";
+print numbers;
 
-puts "Length of array:";
-puts len(numbers);
+print "Length of array:";
+print len(numbers);
 
 // ============================================
 // 6. String Functions
 // ============================================
-puts "";
-puts "=== String Functions ===";
+print "";
+print "=== String Functions ===";
 
 let text = "Hello World";
-puts "Original string:";
-puts text;
+print "Original string:";
+print text;
 
-puts "Length:";
-puts len(text);
+print "Length:";
+print len(text);
 
-puts "Uppercase:";
-puts uppercase(text);
+print "Uppercase:";
+print uppercase(text);
 
-puts "Lowercase:";
-puts lowercase(text);
+print "Lowercase:";
+print lowercase(text);
 
-puts "Substring (0, 5):";
-puts substr(text, 0, 5);
+print "Substring (0, 5):";
+print substr(text, 0, 5);
 
 let sentence = "apple,banana,cherry";
-puts "Split by comma:";
+print "Split by comma:";
 let fruits = split(sentence, ",");
-puts fruits;
+print fruits;
 
-puts "Join with ' - ':";
+print "Join with ' - ':";
 let joined = join(fruits, " - ");
-puts joined;
+print joined;
 
 // ============================================
 // 7. Type Conversion
 // ============================================
-puts "";
-puts "=== Type Conversion ===";
+print "";
+print "=== Type Conversion ===";
 
 let num_str = "42";
-puts "String to int:";
-puts int(num_str);
+print "String to int:";
+print int(num_str);
 
 let float_str = "3.14";
-puts "String to float:";
-puts float(float_str);
+print "String to float:";
+print float(float_str);
 
 let number = 123;
-puts "Number to string:";
-puts str(number);
+print "Number to string:";
+print str(number);
 
 // ============================================
 // 8. File I/O
 // ============================================
-puts "";
-puts "=== File I/O ===";
+print "";
+print "=== File I/O ===";
 
 // Write to file
 let content = "Hello from Choco!";
 let success = write_file("output.txt", content);
 
 if success == true {
-    puts "File written successfully!";
+    print "File written successfully!";
 }
 
 // Append to file
@@ -507,39 +507,39 @@ append_file("output.txt", "\nSecond line!");
 
 // Read from file
 let file_content = read_file("output.txt");
-puts "File contents:";
-puts file_content;
+print "File contents:";
+print file_content;
 
 // Check if file exists
 let exists = file_exists("output.txt");
 if exists == true {
-    puts "File exists!";
+    print "File exists!";
 }
 
 // ============================================
 // 9. Error Handling
 // ============================================
-puts "";
-puts "=== Error Handling ===";
+print "";
+print "=== Error Handling ===";
 
 try {
-    puts "In try block";
+    print "In try block";
     let risky = 10 / 2;
-    puts risky;
+    print risky;
     throw "Something went wrong!";
-    puts "This won't execute";
+    print "This won't execute";
 } catch err {
-    puts "Caught error:";
-    puts err;
+    print "Caught error:";
+    print err;
 }
 
-puts "After try-catch";
+print "After try-catch";
 
 // ============================================
 // 10. Complex Example: Data Processing
 // ============================================
-puts "";
-puts "=== Complex Example ===";
+print "";
+print "=== Complex Example ===";
 
 struct Student {
     name,
@@ -552,73 +552,73 @@ fn create_student(name, grade) {
     return Student { name: name, grade: grade, passed: passed };
 }
 
-puts "Students:";
+print "Students:";
 
 let student = create_student("Alice", 85);
-puts "---";
-puts student.name;
-puts student.grade;
+print "---";
+print student.name;
+print student.grade;
 if student.passed == true {
-    puts "Status: PASSED";
+    print "Status: PASSED";
 } else {
-    puts "Status: FAILED";
+    print "Status: FAILED";
 }
 
 let student = create_student("Bob", 55);
-puts "---";
-puts student.name;
-puts student.grade;
+print "---";
+print student.name;
+print student.grade;
 if student.passed == true {
-    puts "Status: PASSED";
+    print "Status: PASSED";
 } else {
-    puts "Status: FAILED";
+    print "Status: FAILED";
 }
 
 let student = create_student("Charlie", 92);
-puts "---";
-puts student.name;
-puts student.grade;
+print "---";
+print student.name;
+print student.grade;
 if student.passed == true {
-    puts "Status: PASSED";
+    print "Status: PASSED";
 } else {
-    puts "Status: FAILED";
+    print "Status: FAILED";
 }
 
 // ============================================
 // 11. String Indexing
 // ============================================
-puts "";
-puts "=== String Indexing ===";
+print "";
+print "=== String Indexing ===";
 
 let word = "Hello";
-puts "First character:";
-puts word[0];
+print "First character:";
+print word[0];
 
-puts "Third character:";
-puts word[2];
+print "Third character:";
+print word[2];
 
 // ============================================
 // 13. Advanced Control Flow
 // ============================================
-puts "";
-puts "=== Advanced Control Flow ===";
+print "";
+print "=== Advanced Control Flow ===";
 
-puts "Nested loops with break:";
+print "Nested loops with break:";
 for i in 0..3 {
     for j in 0..3 {
         if j == 2 {
             break;
         }
         let val = i * 10 + j;
-        puts val;
+        print val;
     }
 }
 
 // ============================================
 // 14. Standard Library in Action
 // ============================================
-puts "";
-puts "=== Standard Library Demo ===";
+print "";
+print "=== Standard Library Demo ===";
 
 fn calculate_stats(numbers) {
     let sum = 0;
@@ -641,26 +641,26 @@ fn calculate_stats(numbers) {
         j = j + 1;
     }
     
-    puts "Count: ";
-    puts count;
-    puts "Sum: ";
-    puts sum;
-    puts "Average: ";
-    puts avg;
-    puts "Min: ";
-    puts min_val;
-    puts "Max: ";
-    puts max_val;
+    print "Count: ";
+    print count;
+    print "Sum: ";
+    print sum;
+    print "Average: ";
+    print avg;
+    print "Min: ";
+    print min_val;
+    print "Max: ";
+    print max_val;
 }
 
 let data = [23, 45, 12, 67, 34, 89, 15];
-puts "Statistics for array:";
-puts data;
+print "Statistics for array:";
+print data;
 calculate_stats(data);
 
-puts "";
-puts "=== Phase 2 Demo Complete! ===";
-puts "Features: Structs, File I/O, Error Handling, Break/Continue, Standard Library";
+print "";
+print "=== Phase 2 Demo Complete! ===";
+print "Features: Structs, File I/O, Error Handling, Break/Continue, Standard Library";
 
 //////////////////////////////////////
 // ChocoLang 3.0.0 - Milky Way
@@ -668,30 +668,30 @@ puts "Features: Structs, File I/O, Error Handling, Break/Continue, Standard Libr
 // Made by Camila "Mocha" Rose
 //////////////////////////////////////
 
-puts "=== ChocoLang 3.0.0 - Milky Way ===";
-puts "";
+print "=== ChocoLang 3.0.0 - Milky Way ===";
+print "";
 
 // ============================================
 // 1. Type System with Inference and typeof
 // ============================================
-puts "=== Type System ===";
+print "=== Type System ===";
 
 let number = 42;
 let text = "Hello";
 let flag = true;
 let list = [1, 2, 3];
 
-puts "Type of number:";
-puts typeof(number);
+print "Type of number:";
+print typeof(number);
 
-puts "Type of text:";
-puts typeof(text);
+print "Type of text:";
+print typeof(text);
 
-puts "Type of flag:";
-puts typeof(flag);
+print "Type of flag:";
+print typeof(flag);
 
-puts "Type of list:";
-puts typeof(list);
+print "Type of list:";
+print typeof(list);
 
 struct Point {
     x,
@@ -699,30 +699,30 @@ struct Point {
 }
 
 let point = Point { x: 10, y: 20 };
-puts "Type of point:";
-puts typeof(point);
+print "Type of point:";
+print typeof(point);
 
 // ============================================
 // 2. Closures and Lambdas
 // ============================================
-puts "";
-puts "=== Closures and Lambdas ===";
+print "";
+print "=== Closures and Lambdas ===";
 
 // Simple lambda
 let double = |x| => {
     return x * 2;
 };
 
-puts "Double of 5:";
-puts double(5);
+print "Double of 5:";
+print double(5);
 
 // Lambda with multiple parameters
 let add = |a, b| => {
     return a + b;
 };
 
-puts "Add 10 + 20:";
-puts add(10, 20);
+print "Add 10 + 20:";
+print add(10, 20);
 
 // Closure capturing variables
 let multiplier = 3;
@@ -730,42 +730,42 @@ let multiply_by = |x| => {
     return x * multiplier;
 };
 
-puts "Multiply 7 by 3:";
-puts multiply_by(7);
+print "Multiply 7 by 3:";
+print multiply_by(7);
 
 // Lambda with no parameters - use underscore as placeholder
 let greet = |_| => {
     return "Hello from lambda!";
 };
 
-puts greet(0);
+print greet(0);
 
 // ============================================
 // 3. Pattern Matching
 // ============================================
-puts "";
-puts "=== Pattern Matching ===";
+print "";
+print "=== Pattern Matching ===";
 
 let day = 3;
 
 match day {
     case 1 => {
-        puts "Monday";
+        print "Monday";
     }
     case 2 => {
-        puts "Tuesday";
+        print "Tuesday";
     }
     case 3 => {
-        puts "Wednesday";
+        print "Wednesday";
     }
     case 4 => {
-        puts "Thursday";
+        print "Thursday";
     }
     case 5 => {
-        puts "Friday";
+        print "Friday";
     }
     default => {
-        puts "Weekend!";
+        print "Weekend!";
     }
 }
 
@@ -774,16 +774,16 @@ let color = "red";
 
 match color {
     case "red" => {
-        puts "Stop";
+        print "Stop";
     }
     case "yellow" => {
-        puts "Caution";
+        print "Caution";
     }
     case "green" => {
-        puts "Go";
+        print "Go";
     }
     default => {
-        puts "Unknown color";
+        print "Unknown color";
     }
 }
 
@@ -806,14 +806,14 @@ match score {
     }
 }
 
-puts "Grade:";
-puts grade;
+print "Grade:";
+print grade;
 
 // ============================================
 // 4. Higher-Order Functions with Lambdas
 // ============================================
-puts "";
-puts "=== Higher-Order Functions ===";
+print "";
+print "=== Higher-Order Functions ===";
 
 let numbers = [1, 2, 3, 4, 5];
 
@@ -822,30 +822,30 @@ let doubled = map(numbers, |x| => {
     return x * 2;
 });
 
-puts "Doubled numbers:";
-puts doubled;
+print "Doubled numbers:";
+print doubled;
 
 // Filter: keep only elements that match condition
 let evens = filter(numbers, |x| => {
     return x % 2 == 0;
 });
 
-puts "Even numbers:";
-puts evens;
+print "Even numbers:";
+print evens;
 
 // Reduce: combine elements into single value
 let sum = reduce(numbers, 0, |acc, x| => {
     return acc + x;
 });
 
-puts "Sum of numbers:";
-puts sum;
+print "Sum of numbers:";
+print sum;
 
 // ============================================
 // 5. Advanced Lambda Examples
 // ============================================
-puts "";
-puts "=== Advanced Lambdas ===";
+print "";
+print "=== Advanced Lambdas ===";
 
 // Lambda that returns a lambda
 fn create_adder(n) {
@@ -856,18 +856,18 @@ fn create_adder(n) {
 }
 
 let add5 = create_adder(5);
-puts "Add 5 to 10:";
-puts add5(10);
+print "Add 5 to 10:";
+print add5(10);
 
 let add100 = create_adder(100);
-puts "Add 100 to 50:";
-puts add100(50);
+print "Add 100 to 50:";
+print add100(50);
 
 // ============================================
 // 6. Complex Higher-Order Function Usage
 // ============================================
-puts "";
-puts "=== Complex HOF Examples ===";
+print "";
+print "=== Complex HOF Examples ===";
 
 let data = [10, 15, 20, 25, 30, 35, 40];
 
@@ -880,14 +880,14 @@ let result = map(filtered, |x| => {
     return x / 5;
 });
 
-puts "Filtered and transformed:";
-puts result;
+print "Filtered and transformed:";
+print result;
 
 // ============================================
 // 7. Pattern Matching with Functions
 // ============================================
-puts "";
-puts "=== Pattern Matching in Functions ===";
+print "";
+print "=== Pattern Matching in Functions ===";
 
 fn get_message(code) {
     let msg = "";
@@ -908,20 +908,20 @@ fn get_message(code) {
     return msg;
 }
 
-puts "Status 200:";
-puts get_message(200);
+print "Status 200:";
+print get_message(200);
 
-puts "Status 404:";
-puts get_message(404);
+print "Status 404:";
+print get_message(404);
 
-puts "Status 999:";
-puts get_message(999);
+print "Status 999:";
+print get_message(999);
 
 // ============================================
 // 8. Lambda with Arrays
 // ============================================
-puts "";
-puts "=== Lambdas with Arrays ===";
+print "";
+print "=== Lambdas with Arrays ===";
 
 let words = ["hello", "world", "choco", "lang"];
 
@@ -929,21 +929,21 @@ let upper_words = map(words, |w| => {
     return uppercase(w);
 });
 
-puts "Uppercase words:";
-puts upper_words;
+print "Uppercase words:";
+print upper_words;
 
 let long_words = filter(words, |w| => {
     return len(w) > 4;
 });
 
-puts "Long words (>4 chars):";
-puts long_words;
+print "Long words (>4 chars):";
+print long_words;
 
 // ============================================
 // 9. Closures with State
 // ============================================
-puts "";
-puts "=== Closures with State ===";
+print "";
+print "=== Closures with State ===";
 
 fn counter() {
     let count = 0;
@@ -955,45 +955,45 @@ fn counter() {
 }
 
 let c1 = counter();
-puts "Counter 1:";
-puts c1(0);
-puts c1(0);
-puts c1(0);
+print "Counter 1:";
+print c1(0);
+print c1(0);
+print c1(0);
 
 // ============================================
 // 10. Type Inference Examples
 // ============================================
-puts "";
-puts "=== Type Inference ===";
+print "";
+print "=== Type Inference ===";
 
 let inferred_num = 100;
 let inferred_str = "auto";
 let inferred_arr = [true, false, true];
 
-puts "Inferred types:";
-puts typeof(inferred_num);
-puts typeof(inferred_str);
-puts typeof(inferred_arr);
+print "Inferred types:";
+print typeof(inferred_num);
+print typeof(inferred_str);
+print typeof(inferred_arr);
 
 // ============================================
 // 11. Advanced Pattern Matching
 // ============================================
-puts "";
-puts "=== Advanced Pattern Matching ===";
+print "";
+print "=== Advanced Pattern Matching ===";
 
 fn describe_number(n) {
     match n {
         case 0 => {
-            puts "Zero";
+            print "Zero";
         }
         case 1 => {
-            puts "One";
+            print "One";
         }
         case 2 => {
-            puts "Two";
+            print "Two";
         }
         default => {
-            puts "Many";
+            print "Many";
         }
     }
 }
@@ -1005,8 +1005,8 @@ describe_number(42);
 // ============================================
 // 13. Lambda Factorial
 // ============================================
-puts "";
-puts "=== Lambda Factorial ===";
+print "";
+print "=== Lambda Factorial ===";
 
 fn make_factorial() {
     let fact = |n| => {
@@ -1022,17 +1022,17 @@ fn make_factorial() {
 }
 
 let factorial = make_factorial();
-puts "Factorial of 5:";
-puts factorial(5);
+print "Factorial of 5:";
+print factorial(5);
 
-puts "Factorial of 7:";
-puts factorial(7);
+print "Factorial of 7:";
+print factorial(7);
 
 // ============================================
 // 14. Pattern Match Calculator
 // ============================================
-puts "";
-puts "=== Pattern Match Calculator ===";
+print "";
+print "=== Pattern Match Calculator ===";
 
 fn calculate(operation, a, b) {
     let result = 0;
@@ -1056,17 +1056,17 @@ fn calculate(operation, a, b) {
     return result;
 }
 
-puts "10 + 5:";
-puts calculate("add", 10, 5);
+print "10 + 5:";
+print calculate("add", 10, 5);
 
-puts "10 * 3:";
-puts calculate("mul", 10, 3);
+print "10 * 3:";
+print calculate("mul", 10, 3);
 
 // ============================================
 // 15. Type-Safe Operations
 // ============================================
-puts "";
-puts "=== Type-Safe Operations ===";
+print "";
+print "=== Type-Safe Operations ===";
 
 fn safe_divide(a, b) {
     let type_a = typeof(a);
@@ -1083,12 +1083,12 @@ fn safe_divide(a, b) {
     }
 }
 
-puts "20 / 4:";
-puts safe_divide(20, 4);
+print "20 / 4:";
+print safe_divide(20, 4);
 
-puts "20 / 0:";
-puts safe_divide(20, 0);
+print "20 / 0:";
+print safe_divide(20, 0);
 
-puts "";
-puts "=== Phase 3 Complete! ===";
-puts "Features: Type System, Closures/Lambdas, Pattern Matching, HOF";
+print "";
+print "=== Phase 3 Complete! ===";
+print "Features: Type System, Closures/Lambdas, Pattern Matching, HOF";
