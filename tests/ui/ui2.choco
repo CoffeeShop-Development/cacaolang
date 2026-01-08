@@ -1,6 +1,3 @@
-// ChocoLang Password Generator
-// Generate secure random passwords with customizable options
-
 gui_init("com.chocolang.passwordgen");
 
 // Create main window

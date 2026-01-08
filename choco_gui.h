@@ -1,6 +1,6 @@
 //////////////////////////////////////
-// ChocoLang Amour Lib for GUI
-// GTK4 Bindings for ChocoLang
+// CacaoLang Amour Lib (v0.22) for GUI
+// GTK4 Bindings for CacaoLang
 //////////////////////////////////////
 
 #ifndef CHOCO_GUI_H

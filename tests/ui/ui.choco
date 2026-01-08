@@ -1,6 +1,3 @@
-// ChocoLang Calculator
-// A fully-featured calculator with memory functions
-
 gui_init("com.chocolang.calculator");
 
 // Calculator state

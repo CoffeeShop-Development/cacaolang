@@ -1,0 +1,991 @@
+//====================================||
+// CacaoLang 1.0.0 - Cacao Tests!     ||
+// CoffeeShop Development             ||
+// Made by Camila "Mocha" Rose        ||
+//====================================||
+
+print "<====== Cacao 1.0.0";
+print "";
+
+print "<====== Functions";
+
+// Mathematical and String Based Functions
+fn add(a,b) {
+    return a + b;    
+}
+
+fn multiply(x,y) {
+    return x * y;   
+}
+
+fn greet(name) {
+    return "Hello, #{name}";  
+}
+
+fn farewell(user) {
+    return "Farewell, #{user}!";
+}
+
+let sum = add(10, 20);
+let product = multiply(5, 6);
+let greeting = greet("Choco");
+let bye = farewell(input("What is your name? "));
+
+print sum;
+print product;
+print greeting;
+print bye;
+print "";
+
+// Factorial function (recursive-style with loop)
+fn factorial(n) {
+    let result = 1;
+    let i = 1;
+    while i <= n {
+        result = result * i;
+        i = i + 1;
+    }
+    return result;
+}
+
+print "Factorial of 5:";
+print factorial(5);
+
+// Inputs
+print "";
+print "<===== Inputs";
+
+let a = input("Enter first number: ");
+let b = input("Enter second number: ");
+
+let num1 = float(a);
+let num2 = float(b);
+
+let sum = num1 + num2;
+print "Sum: #{sum}";
+
+let secret = random_int(1, 100);
+let guess = 0;
+let attempts = 0;
+
+print "Guess a number between 1 and 100!";
+
+while guess != secret {
+    let input_str = input("Your guess: ");
+    guess = int(input_str);
+    attempts = attempts + 1;
+    
+    if guess < secret {
+        print "Too low!";
+    } else {
+        if guess > secret {
+            print "Too high!";
+        }
+    }
+}
+
+print "Correct! You guessed it in #{attempts} attempts!";
+
+print "";
+print "<===== Arrays";
+
+let numbers = [1, 2, 3, 4, 5];
+let fruits = ["apple", "banana", "cherry"];
+let mixed = [42, "hello", true, 3.14];
+
+// Accessing the members of an array.
+print "Numbers array:";
+print numbers;
+
+print "Fruits array:";
+print fruits;
+
+print "Mixed array:";
+print mixed;
+
+// Array indexing
+print "First number:";
+print numbers[0];
+
+print "Second fruit:";
+print fruits[1];
+
+print "Mixed element:";
+print mixed[2];
+
+// Working with arrays
+let scores = [85, 92, 78, 95, 88];
+print "Test scores:";
+print scores;
+
+
+print "";
+print "=== For Loops ===";
+
+print "Count from 0 to 4:";
+for i in 0..5 {
+    print i;
+}
+
+print "Even numbers 0-10:";
+for i in 0..6 {
+    let even = i * 2;
+    print even;
+}
+
+print "Sum using for loop:";
+let total = 0;
+for i in 1..11 {
+    total = total + i;
+}
+print total;
+
+print "";
+print "=== String Interpolation ===";
+
+let name = "Alice";
+let age = 25;
+let city = "Wonderland";
+
+let message = "My name is #{name} and I am #{age} years old.";
+print message;
+
+let location = "I live in #{city}!";
+print location;
+
+fn introduce(person, years) {
+    let intro = "This is #{person}, who is #{years} years old.";
+    return intro;
+}
+
+print introduce("Bob", 30);
+
+print "";
+print "=== Logical Operators ===";
+
+let isAdult = true;
+let hasLicense = true;
+let canDrive = isAdult && hasLicense;
+
+if canDrive {
+    print "Can drive: YES";
+}
+
+let isSunny = false;
+let isWarm = true;
+let niceWeather = isSunny || isWarm;
+
+if niceWeather {
+    print "Weather is nice!";
+}
+
+let isRaining = false;
+let notRaining = !isRaining;
+
+if notRaining {
+    print "It's not raining!";
+}
+
+// Complex logical expressions
+let x = 10;
+let y = 20;
+let z = 15;
+
+if x < y && y > z {
+    print "x < y AND y > z";
+}
+
+if x > 5 || z < 10 {
+    print "x > 5 OR z < 10";
+}
+
+print "";
+print "=== Modulo Operator ===";
+
+print "Even or Odd check:";
+for i in 0..10 {
+    let remainder = i % 2;
+    if remainder == 0 {
+        let msg = "#{i} is even";
+        print msg;
+    } else {
+        let msg = "#{i} is odd";
+        print msg;
+    }
+}
+
+print "";
+print "=== FizzBuzz (1-20) ===";
+
+for i in 1..21 {
+    let by3 = i % 3;
+    let by5 = i % 5;
+    
+    if by3 == 0 && by5 == 0 {
+        print "FizzBuzz";
+    } else {
+        if by3 == 0 {
+            print "Fizz";
+        } else {
+            if by5 == 0 {
+                print "Buzz";
+            } else {
+                print i;
+            }
+        }
+    }
+}
+
+print "";
+print "=== Functions with Arrays ===";
+
+fn sumArray(arr) {
+    let sum = 0;
+    let i = 0;
+    while i < 5 {
+        sum = sum + arr[i];
+        i = i + 1;
+    }
+    return sum;
+}
+
+let myNumbers = [10, 20, 30, 40, 50];
+let arraySum = sumArray(myNumbers);
+print "Sum of array:";
+print arraySum;
+
+// Nested Functions
+fn isPrime(n) {
+    if n <= 1 {
+        return false;
+    }
+    if n <= 3 {
+        return true;
+    }
+    if n % 2 == 0 {
+        return false;
+    }
+    
+    let i = 3;
+    let limit = sqrt(n);
+    while i <= limit {
+        if n % i == 0 {
+            return false;
+        }
+        i = i + 2;
+    }
+    return true;
+}
+
+print "";
+print "=== Advanced Functions ===";
+
+fn fibonacci(n) {
+    if n <= 1 {
+        return n;
+    }
+    
+    let a = 0;
+    let b = 1;
+    let i = 2;
+    
+    while i <= n {
+        let temp = a + b;
+        a = b;
+        b = temp;
+        i = i + 1;
+    }
+    
+    return b;
+}
+
+print "Fibonacci sequence (first 10):";
+for i in 0..10 {
+    let fib = fibonacci(i);
+    print fib;
+}
+
+print "";
+print "=== String Operations ===";
+
+let first = "Hello";
+let second = "World";
+let combined = first + " " + second;
+print combined;
+
+let prefix = "Number: ";
+let number = 42;
+// Note: Direct number to string in interpolation
+let result = "#{prefix}#{number}";
+print result;
+
+print "";
+print "=== Nested Loops ===";
+
+print "Multiplication table (3x3):";
+for i in 1..4 {
+    for j in 1..4 {
+        let product = i * j;
+        print product;
+    }
+}
+
+print "";
+print "=== Structs ===";
+
+struct Person {
+    name,
+    age,
+    city
+}
+
+let alice = Person { name: "Alice", age: 30, city: "NYC" };
+let bob = Person { name: "Bob", age: 25, city: "LA" };
+
+print "Person 1:";
+print alice;
+
+print "Accessing fields:";
+print alice.name;
+print alice.age;
+print alice.city;
+
+print "Person 2:";
+print bob.name;
+
+print "";
+print "=== Break and Continue ===";
+
+print "Break example - stop at 5:";
+for i in 0..10 {
+    if i == 5 {
+    break;
+    }
+    print i;
+}
+
+print "Continue example - skip even numbers:";
+for i in 0..10 {
+    if i % 2 == 0 {
+        continue;
+    }
+    print i;
+}
+
+print "";
+print "=== Math Functions ===";
+
+let num = 16;
+print "sqrt(16):";
+print sqrt(num);
+
+print "pow(2, 8):";
+print pow(2, 8);
+
+print "abs(-42):";
+print abs(-42);
+
+print "floor(3.7):";
+print floor(3.7);
+
+print "ceil(3.2):";
+print ceil(3.2);
+
+print "round(3.5):";
+print round(3.5);
+
+print "min(5, 3):";
+print min(5, 3);
+
+print "max(5, 3):";
+print max(5, 3);
+
+print "";
+print "=== Random Numbers ===";
+
+print "Random float (0-1):";
+print random();
+
+print "Random int (1-10):";
+print random_int(1, 10);
+
+print "";
+print "=== Array Functions ===";
+
+let numbers = [1, 2, 3];
+print "Original array:";
+print numbers;
+
+print "Length of array:";
+print len(numbers);
+
+print "";
+print "=== String Functions ===";
+
+let text = "Hello World";
+print "Original string:";
+print text;
+
+print "Length:";
+print len(text);
+
+print "Uppercase:";
+print uppercase(text);
+
+print "Lowercase:";
+print lowercase(text);
+
+print "Substring (0, 5):";
+print substr(text, 0, 5);
+
+let sentence = "apple,banana,cherry";
+print "Split by comma:";
+let fruits = split(sentence, ",");
+print fruits;
+
+print "Join with ' - ':";
+let joined = join(fruits, " - ");
+print joined;
+
+print "";
+print "=== Type Conversion ===";
+
+let num_str = "42";
+print "String to int:";
+print int(num_str);
+
+let float_str = "3.14";
+print "String to float:";
+print float(float_str);
+
+let number = 123;
+print "Number to string:";
+print str(number);
+
+print "";
+print "=== File I/O ===";
+
+// Write to file
+let content = "Hello from Cacao!";
+let success = write_file("output.txt", content);
+
+if success == true {
+    print "File written successfully!";
+}
+
+// Append to file
+append_file("output.txt", "\nSecond line!");
+
+// Read from file
+let file_content = read_file("output.txt");
+print "File contents:";
+print file_content;
+
+// Check if file exists
+let exists = file_exists("output.txt");
+if exists == true {
+    print "File exists!";
+}
+
+print "";
+print "=== Error Handling ===";
+
+try {
+    print "In try block";
+    let risky = 10 / 2;
+    print risky;
+    throw "Something went wrong!";
+    print "This won't execute";
+} catch err {
+    print "Caught error:";
+    print err;
+}
+
+print "After try-catch";
+
+print "";
+print "=== Complex Example ===";
+
+struct Student {
+    name,
+    grade,
+    passed
+}
+
+fn create_student(name, grade) {
+    let passed = grade >= 60;
+    return Student { name: name, grade: grade, passed: passed };
+}
+
+print "Students:";
+
+let student = create_student("Alice", 85);
+print "---";
+print student.name;
+print student.grade;
+if student.passed == true {
+    print "Status: PASSED";
+} else {
+    print "Status: FAILED";
+}
+
+let student = create_student("Bob", 55);
+print "---";
+print student.name;
+print student.grade;
+if student.passed == true {
+    print "Status: PASSED";
+} else {
+    print "Status: FAILED";
+}
+
+let student = create_student("Charlie", 92);
+print "---";
+print student.name;
+print student.grade;
+if student.passed == true {
+    print "Status: PASSED";
+} else {
+    print "Status: FAILED";
+}
+
+print "";
+print "=== String Indexing ===";
+
+let word = "Hello";
+print "First character:";
+print word[0];
+
+print "Third character:";
+print word[2];
+
+print "";
+print "=== Advanced Control Flow ===";
+
+print "Nested loops with break:";
+for i in 0..3 {
+    for j in 0..3 {
+        if j == 2 {
+            break;
+        }
+        let val = i * 10 + j;
+        print val;
+    }
+}
+
+print "";
+print "=== Standard Library Demo ===";
+
+fn calculate_stats(numbers) {
+    let sum = 0;
+    let count = len(numbers);
+    
+    let idx = 0;
+    while idx < count {
+        sum = sum + numbers[idx];
+        idx = idx + 1;
+    }
+    
+    let avg = sum / count;
+    let min_val = numbers[0];
+    let max_val = numbers[0];
+    
+    let j = 1;
+    while j < count {
+        min_val = min(min_val, numbers[j]);
+        max_val = max(max_val, numbers[j]);
+        j = j + 1;
+    }
+    
+    print "Count: ";
+    print count;
+    print "Sum: ";
+    print sum;
+    print "Average: ";
+    print avg;
+    print "Min: ";
+    print min_val;
+    print "Max: ";
+    print max_val;
+}
+
+let data = [23, 45, 12, 67, 34, 89, 15];
+print "Statistics for array:";
+print data;
+calculate_stats(data);
+
+print "";
+print "=== Type System ===";
+
+let number = 42;
+let text = "Hello";
+let flag = true;
+let list = [1, 2, 3];
+
+print "Type of number:";
+print typeof(number);
+
+print "Type of text:";
+print typeof(text);
+
+print "Type of flag:";
+print typeof(flag);
+
+print "Type of list:";
+print typeof(list);
+
+struct Point {
+    x,
+    y
+}
+
+let point = Point { x: 10, y: 20 };
+print "Type of point:";
+print typeof(point);
+print "";
+print "=== Closures and Lambdas ===";
+
+// Simple lambda
+let double = |x| => {
+    return x * 2;
+};
+
+print "Double of 5:";
+print double(5);
+
+// Lambda with multiple parameters
+let add = |a, b| => {
+    return a + b;
+};
+
+print "Add 10 + 20:";
+print add(10, 20);
+
+// Closure capturing variables
+let multiplier = 3;
+let multiply_by = |x| => {
+    return x * multiplier;
+};
+
+print "Multiply 7 by 3:";
+print multiply_by(7);
+
+// Lambda with no parameters - use underscore as placeholder
+let greet = |_| => {
+    return "Hello from lambda!";
+};
+
+print greet(0);
+
+print "";
+print "=== Pattern Matching ===";
+
+let day = 3;
+
+match day {
+    case 1 => {
+        print "Monday";
+    }
+    case 2 => {
+        print "Tuesday";
+    }
+    case 3 => {
+        print "Wednesday";
+    }
+    case 4 => {
+        print "Thursday";
+    }
+    case 5 => {
+        print "Friday";
+    }
+    default => {
+        print "Weekend!";
+    }
+}
+
+// Pattern matching with strings
+let color = "red";
+
+match color {
+    case "red" => {
+        print "Stop";
+    }
+    case "yellow" => {
+        print "Caution";
+    }
+    case "green" => {
+        print "Go";
+    }
+    default => {
+        print "Unknown color";
+    }
+}
+
+// Pattern matching with calculations
+let score = 85;
+let grade = 0;
+
+match score {
+    case 90 => {
+        grade = 4;
+    }
+    case 80 => {
+        grade = 3;
+    }
+    case 70 => {
+        grade = 2;
+    }
+    default => {
+        grade = 1;
+    }
+}
+
+print "Grade:";
+print grade;
+
+print "";
+print "=== Higher-Order Functions ===";
+
+let numbers = [1, 2, 3, 4, 5];
+
+// Map: transform each element
+let doubled = map(numbers, |x| => {
+    return x * 2;
+});
+
+print "Doubled numbers:";
+print doubled;
+
+// Filter: keep only elements that match condition
+let evens = filter(numbers, |x| => {
+    return x % 2 == 0;
+});
+
+print "Even numbers:";
+print evens;
+
+// Reduce: combine elements into single value
+let sum = reduce(numbers, 0, |acc, x| => {
+    return acc + x;
+});
+
+print "Sum of numbers:";
+print sum;
+
+print "";
+print "=== Advanced Lambdas ===";
+
+// Lambda that returns a lambda
+fn create_adder(n) {
+    let adder = |x| => {
+        return x + n;
+    };
+    return adder;
+}
+
+let add5 = create_adder(5);
+print "Add 5 to 10:";
+print add5(10);
+
+let add100 = create_adder(100);
+print "Add 100 to 50:";
+print add100(50);
+
+print "";
+print "=== Complex HOF Examples ===";
+
+let data = [10, 15, 20, 25, 30, 35, 40];
+
+// Chain operations: filter then map
+let filtered = filter(data, |x| => {
+    return x >= 20;
+});
+
+let result = map(filtered, |x| => {
+    return x / 5;
+});
+
+print "Filtered and transformed:";
+print result;
+
+print "";
+print "=== Pattern Matching in Functions ===";
+
+fn get_message(code) {
+    let msg = "";
+    match code {
+        case 200 => {
+            msg = "OK";
+        }
+        case 404 => {
+            msg = "Not Found";
+        }
+        case 500 => {
+            msg = "Server Error";
+        }
+        default => {
+            msg = "Unknown";
+        }
+    }
+    return msg;
+}
+
+print "Status 200:";
+print get_message(200);
+
+print "Status 404:";
+print get_message(404);
+
+print "Status 999:";
+print get_message(999);
+
+print "";
+print "=== Lambdas with Arrays ===";
+
+let words = ["hello", "world", "choco", "lang"];
+
+let upper_words = map(words, |w| => {
+    return uppercase(w);
+});
+
+print "Uppercase words:";
+print upper_words;
+
+let long_words = filter(words, |w| => {
+    return len(w) > 4;
+});
+
+print "Long words (>4 chars):";
+print long_words;
+
+print "";
+print "=== Closures with State ===";
+
+fn counter() {
+    let count = 0;
+    let increment = |_| => {
+        count = count + 1;
+        return count;
+    };
+    return increment;
+}
+
+let c1 = counter();
+print "Counter 1:";
+print c1(0);
+print c1(0);
+print c1(0);
+
+print "";
+print "=== Type Inference ===";
+
+let inferred_num = 100;
+let inferred_str = "auto";
+let inferred_arr = [true, false, true];
+
+print "Inferred types:";
+print typeof(inferred_num);
+print typeof(inferred_str);
+print typeof(inferred_arr);
+
+print "";
+print "=== Advanced Pattern Matching ===";
+
+fn describe_number(n) {
+    match n {
+        case 0 => {
+            print "Zero";
+        }
+        case 1 => {
+            print "One";
+        }
+        case 2 => {
+            print "Two";
+        }
+        default => {
+            print "Many";
+        }
+    }
+}
+
+describe_number(0);
+describe_number(1);
+describe_number(42);
+
+print "";
+print "=== Lambda Factorial ===";
+
+fn make_factorial() {
+    let fact = |n| => {
+        let result = 1;
+        let i = 1;
+        while i <= n {
+            result = result * i;
+            i = i + 1;
+        }
+        return result;
+    };
+    return fact;
+}
+
+let factorial = make_factorial();
+print "Factorial of 5:";
+print factorial(5);
+
+print "Factorial of 7:";
+print factorial(7);
+
+print "";
+print "=== Pattern Match Calculator ===";
+
+fn calculate(operation, a, b) {
+    let result = 0;
+    match operation {
+        case "add" => {
+            result = a + b;
+        }
+        case "sub" => {
+            result = a - b;
+        }
+        case "mul" => {
+            result = a * b;
+        }
+        case "div" => {
+            result = a / b;
+        }
+        default => {
+            result = 0;
+        }
+    }
+    return result;
+}
+
+print "10 + 5:";
+print calculate("add", 10, 5);
+
+print "10 * 3:";
+print calculate("mul", 10, 3);
+
+print "";
+print "=== Type-Safe Operations ===";
+
+fn safe_divide(a, b) {
+    let type_a = typeof(a);
+    let type_b = typeof(b);
+    
+    if type_a == "number" && type_b == "number" {
+        if b == 0 {
+            return "Error: Division by zero";
+        } else {
+            return str(a / b);
+        }
+    } else {
+        return "Error: Invalid types";
+    }
+}
+
+print "20 / 4:";
+print safe_divide(20, 4);
+
+print "20 / 0:";
+print safe_divide(20, 0);
